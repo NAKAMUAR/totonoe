@@ -31,733 +31,240 @@
   --sans: 'Zen Kaku Gothic New', sans-serif;
   --italic: 'Cormorant Garamond', serif;
 }
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html { scroll-behavior: smooth; }
-
 body {
-  font-family: var(--sans);
-  background: var(--bg);
-  color: var(--ink);
-  line-height: 1.7;
-  font-feature-settings: "palt";
-  -webkit-font-smoothing: antialiased;
-  background-image:
-    radial-gradient(at 15% 20%, rgba(184, 153, 104, 0.06) 0, transparent 50%),
-    radial-gradient(at 85% 80%, rgba(122, 132, 99, 0.05) 0, transparent 50%);
-  min-height: 100vh;
-  padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  font-family: var(--sans); background: var(--bg); color: var(--ink);
+  line-height: 1.7; font-feature-settings: "palt"; -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(at 15% 20%, rgba(184, 153, 104, 0.06) 0, transparent 50%),
+                    radial-gradient(at 85% 80%, rgba(122, 132, 99, 0.05) 0, transparent 50%);
+  min-height: 100vh; padding-bottom: calc(72px + env(safe-area-inset-bottom));
 }
-
-/* ============ HEADER ============ */
 .app-header {
-  text-align: center;
-  padding: 2rem 1.5rem 1.5rem;
+  text-align: center; padding: 1.5rem 1.5rem 1.2rem;
   border-bottom: 1px solid var(--line);
-  background: rgba(244, 241, 234, 0.94);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  background: rgba(244, 241, 234, 0.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  position: sticky; top: 0; z-index: 50;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 0.5rem;
 }
-
-.app-mark {
-  font-family: var(--italic);
-  font-style: italic;
-  font-size: 0.7rem;
-  letter-spacing: 0.4em;
-  color: var(--gold);
-  margin-bottom: 0.4rem;
-  text-transform: uppercase;
+.app-header-left { text-align: left; }
+.app-header-right { text-align: right; }
+.app-mark { font-family: var(--italic); font-style: italic; font-size: 0.65rem;
+  letter-spacing: 0.4em; color: var(--gold); margin-bottom: 0.2rem; text-transform: uppercase; }
+.app-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; color: var(--ink); letter-spacing: 0.3em; }
+.app-sub { font-family: var(--italic); font-style: italic; font-size: 0.65rem;
+  color: var(--ink-muted); letter-spacing: 0.2em; margin-top: 0.2rem; }
+.auth-btn {
+  background: var(--paper); border: 1px solid var(--line);
+  padding: 0.4rem 0.7rem; border-radius: 16px;
+  font-family: var(--serif); font-size: 0.7rem; color: var(--ink-soft);
+  cursor: pointer; letter-spacing: 0.05em;
+  display: inline-flex; align-items: center; gap: 0.3rem;
 }
-
-.app-title {
-  font-family: var(--serif);
-  font-size: 1.6rem;
-  font-weight: 500;
-  color: var(--ink);
-  letter-spacing: 0.3em;
+.auth-btn:active { background: var(--bg-soft); }
+.auth-btn.signed-in { background: var(--moss); color: var(--paper); border-color: var(--moss); }
+.auth-avatar { width: 18px; height: 18px; border-radius: 50%; background: var(--bg-soft); }
+.sync-indicator {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--ink-muted); margin-left: 0.3rem;
 }
-
-.app-sub {
-  font-family: var(--italic);
-  font-style: italic;
-  font-size: 0.7rem;
-  color: var(--ink-muted);
-  letter-spacing: 0.2em;
-  margin-top: 0.3rem;
-}
-
-/* ============ CONTAINER ============ */
-.container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 1.5rem 1.2rem;
-}
-
-.page {
-  display: none;
-  animation: fadeIn 0.4s ease;
-}
-
-.page.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ============ STATS (HOME) ============ */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.8rem;
-  margin-bottom: 2rem;
-}
-
-.stat-card {
-  background: var(--paper);
-  padding: 1.2rem 0.6rem;
-  border-radius: 4px;
-  box-shadow: var(--shadow);
-  text-align: center;
-  border-top: 2px solid var(--terracotta);
-}
-
+.sync-indicator.synced { background: var(--moss); }
+.sync-indicator.syncing { background: var(--gold); animation: pulse 1.2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.container { max-width: 720px; margin: 0 auto; padding: 1.5rem 1.2rem; }
+.page { display: none; animation: fadeIn 0.4s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-bottom: 2rem; }
+.stat-card { background: var(--paper); padding: 1.2rem 0.6rem; border-radius: 4px;
+  box-shadow: var(--shadow); text-align: center; border-top: 2px solid var(--terracotta); }
 .stat-card:nth-child(2) { border-top-color: var(--moss); }
 .stat-card:nth-child(3) { border-top-color: var(--gold); }
-
-.stat-num {
-  font-family: var(--italic);
-  font-size: 2rem;
-  color: var(--ink);
-  font-weight: 500;
-  line-height: 1;
-}
-
-.stat-unit {
-  font-family: var(--serif);
-  font-size: 0.7rem;
-  color: var(--ink-soft);
-  margin-left: 0.2rem;
-}
-
-.stat-label {
-  font-family: var(--serif);
-  font-size: 0.75rem;
-  color: var(--ink-muted);
-  margin-top: 0.5rem;
-  letter-spacing: 0.1em;
-}
-
-/* ============ DATE BAR ============ */
-.date-bar {
-  background: var(--paper);
-  padding: 1rem 1.2rem;
-  border-radius: 4px;
-  box-shadow: var(--shadow);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.date-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.date-day {
-  font-family: var(--italic);
-  font-style: italic;
-  color: var(--gold);
-  font-size: 0.8rem;
-  letter-spacing: 0.15em;
-}
-
-.date-full {
-  font-family: var(--serif);
-  font-size: 1rem;
-  color: var(--ink);
-  margin-top: 0.1rem;
-  letter-spacing: 0.05em;
-}
-
-.date-progress {
-  text-align: right;
-}
-
-.date-progress-num {
-  font-family: var(--italic);
-  font-size: 1.4rem;
-  color: var(--terracotta);
-  font-weight: 500;
-}
-
-.date-progress-label {
-  font-size: 0.7rem;
-  color: var(--ink-muted);
-  letter-spacing: 0.1em;
-}
-
-/* ============ SECTION TITLE ============ */
-.section-title {
-  font-family: var(--serif);
-  font-size: 1rem;
-  color: var(--ink);
-  margin: 1.8rem 0 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  letter-spacing: 0.1em;
-  font-weight: 500;
-}
-
-.section-title-en {
-  font-family: var(--italic);
-  font-style: italic;
-  font-size: 0.7rem;
-  color: var(--gold);
-  letter-spacing: 0.2em;
-}
-
-/* ============ CHECKLIST ============ */
-.check-block {
-  background: var(--paper);
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-
-.check-block-header {
-  padding: 0.9rem 1.2rem;
-  background: var(--bg-soft);
-  border-left: 3px solid var(--terracotta);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.check-block-title {
-  font-family: var(--serif);
-  font-size: 1rem;
-  color: var(--ink);
-  letter-spacing: 0.08em;
-}
-
-.check-block-en {
-  font-family: var(--italic);
-  font-style: italic;
-  font-size: 0.7rem;
-  color: var(--ink-muted);
-  letter-spacing: 0.15em;
-}
-
-.check-list {
-  list-style: none;
-}
-
-.check-item {
-  display: flex;
-  align-items: flex-start;
-  padding: 0.9rem 1.2rem;
-  border-bottom: 1px solid var(--line);
-  cursor: pointer;
-  transition: background 0.2s;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.check-item:last-child {
-  border-bottom: none;
-}
-
-.check-item:active {
-  background: var(--bg-soft);
-}
-
-.check-box {
-  width: 22px;
-  height: 22px;
-  border: 1.5px solid var(--moss);
-  border-radius: 3px;
-  margin-right: 0.9rem;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-  margin-top: 1px;
-}
-
-.check-item.done .check-box {
-  background: var(--moss);
-  border-color: var(--moss);
-}
-
-.check-box::after {
-  content: '✓';
-  color: var(--paper);
-  font-size: 0.85rem;
-  opacity: 0;
-  transform: scale(0.5);
-  transition: all 0.3s;
-}
-
-.check-item.done .check-box::after {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.check-text {
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-  line-height: 1.6;
-  flex: 1;
-}
-
-.check-item.done .check-text {
-  color: var(--ink-muted);
-  text-decoration: line-through;
-  text-decoration-color: var(--ink-muted);
-}
-
-.check-text strong {
-  color: var(--ink);
-  font-weight: 500;
-}
-
-.check-item.done .check-text strong {
-  color: var(--ink-muted);
-}
-
-.check-note {
-  display: block;
-  font-size: 0.75rem;
-  color: var(--ink-muted);
-  margin-top: 0.2rem;
-  font-style: italic;
-}
-
-/* ============ YOGA CARDS ============ */
-.day-tabs {
-  display: flex;
-  gap: 0.4rem;
-  margin-bottom: 1.2rem;
-  overflow-x: auto;
-  scrollbar-width: none;
-  padding-bottom: 0.3rem;
-}
-
+.stat-num { font-family: var(--italic); font-size: 2rem; color: var(--ink); font-weight: 500; line-height: 1; }
+.stat-unit { font-family: var(--serif); font-size: 0.7rem; color: var(--ink-soft); margin-left: 0.2rem; }
+.stat-label { font-family: var(--serif); font-size: 0.75rem; color: var(--ink-muted);
+  margin-top: 0.5rem; letter-spacing: 0.1em; }
+.date-bar { background: var(--paper); padding: 1rem 1.2rem; border-radius: 4px;
+  box-shadow: var(--shadow); display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.date-info { display: flex; flex-direction: column; }
+.date-day { font-family: var(--italic); font-style: italic; color: var(--gold);
+  font-size: 0.8rem; letter-spacing: 0.15em; }
+.date-full { font-family: var(--serif); font-size: 1rem; color: var(--ink); margin-top: 0.1rem; letter-spacing: 0.05em; }
+.date-progress { text-align: right; }
+.date-progress-num { font-family: var(--italic); font-size: 1.4rem; color: var(--terracotta); font-weight: 500; }
+.date-progress-label { font-size: 0.7rem; color: var(--ink-muted); letter-spacing: 0.1em; }
+.section-title { font-family: var(--serif); font-size: 1rem; color: var(--ink);
+  margin: 1.8rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--line);
+  display: flex; align-items: baseline; justify-content: space-between; letter-spacing: 0.1em; font-weight: 500; }
+.section-title-en { font-family: var(--italic); font-style: italic; font-size: 0.7rem;
+  color: var(--gold); letter-spacing: 0.2em; }
+.check-block { background: var(--paper); border-radius: 4px; margin-bottom: 1rem;
+  box-shadow: var(--shadow); overflow: hidden; }
+.check-block-header { padding: 0.9rem 1.2rem; background: var(--bg-soft);
+  border-left: 3px solid var(--terracotta); display: flex; align-items: center; justify-content: space-between; }
+.check-block-title { font-family: var(--serif); font-size: 1rem; color: var(--ink); letter-spacing: 0.08em; }
+.check-block-en { font-family: var(--italic); font-style: italic; font-size: 0.7rem;
+  color: var(--ink-muted); letter-spacing: 0.15em; }
+.check-list { list-style: none; }
+.check-item { display: flex; align-items: flex-start; padding: 0.9rem 1.2rem;
+  border-bottom: 1px solid var(--line); cursor: pointer; transition: background 0.2s;
+  user-select: none; -webkit-user-select: none; }
+.check-item:last-child { border-bottom: none; }
+.check-item:active { background: var(--bg-soft); }
+.check-box { width: 22px; height: 22px; border: 1.5px solid var(--moss); border-radius: 3px;
+  margin-right: 0.9rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s; margin-top: 1px; }
+.check-item.done .check-box { background: var(--moss); border-color: var(--moss); }
+.check-box::after { content: '✓'; color: var(--paper); font-size: 0.85rem;
+  opacity: 0; transform: scale(0.5); transition: all 0.3s; }
+.check-item.done .check-box::after { opacity: 1; transform: scale(1); }
+.check-text { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.6; flex: 1; }
+.check-item.done .check-text { color: var(--ink-muted); text-decoration: line-through;
+  text-decoration-color: var(--ink-muted); }
+.check-text strong { color: var(--ink); font-weight: 500; }
+.check-item.done .check-text strong { color: var(--ink-muted); }
+.check-note { display: block; font-size: 0.75rem; color: var(--ink-muted);
+  margin-top: 0.2rem; font-style: italic; }
+.day-tabs { display: flex; gap: 0.4rem; margin-bottom: 1.2rem; overflow-x: auto;
+  scrollbar-width: none; padding-bottom: 0.3rem; }
 .day-tabs::-webkit-scrollbar { display: none; }
-
-.day-tab {
-  flex-shrink: 0;
-  padding: 0.6rem 1rem;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  font-family: var(--serif);
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-  cursor: pointer;
-  transition: all 0.3s;
-  letter-spacing: 0.1em;
-}
-
-.day-tab.active {
-  background: var(--terracotta);
-  color: var(--paper);
-  border-color: var(--terracotta);
-}
-
-.day-tab:active {
-  transform: scale(0.96);
-}
-
-.yoga-card {
-  background: var(--paper);
-  padding: 1.5rem 1.3rem;
-  border-radius: 4px;
-  box-shadow: var(--shadow);
-  margin-bottom: 1rem;
-  border-top: 2px solid var(--moss);
-}
-
+.day-tab { flex-shrink: 0; padding: 0.6rem 1rem; background: var(--paper); border: 1px solid var(--line);
+  border-radius: 20px; font-family: var(--serif); font-size: 0.85rem; color: var(--ink-soft);
+  cursor: pointer; transition: all 0.3s; letter-spacing: 0.1em; }
+.day-tab.active { background: var(--terracotta); color: var(--paper); border-color: var(--terracotta); }
+.day-tab:active { transform: scale(0.96); }
+.yoga-card { background: var(--paper); padding: 1.5rem 1.3rem; border-radius: 4px;
+  box-shadow: var(--shadow); margin-bottom: 1rem; border-top: 2px solid var(--moss); }
 .yoga-card.morning { border-top-color: var(--gold); }
 .yoga-card.noon { border-top-color: var(--terracotta); }
 .yoga-card.night { border-top-color: var(--accent); }
-
-.yoga-day-label {
-  font-family: var(--italic);
-  font-style: italic;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  color: var(--gold);
-  margin-bottom: 0.4rem;
-  text-transform: uppercase;
-}
-
-.yoga-title {
-  font-family: var(--serif);
-  font-size: 1.05rem;
-  color: var(--ink);
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  line-height: 1.5;
-}
-
-.yoga-duration {
-  font-size: 0.75rem;
-  color: var(--ink-muted);
-  letter-spacing: 0.1em;
-  margin-bottom: 1rem;
-}
-
-.yoga-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: var(--serif);
-  font-size: 0.85rem;
-  color: var(--terracotta);
-  text-decoration: none;
-  letter-spacing: 0.08em;
-  padding: 0.5rem 1rem;
-  background: var(--bg-soft);
-  border-radius: 20px;
-  transition: all 0.3s;
-}
-
-.yoga-link::after {
-  content: '→';
-  transition: transform 0.3s;
-}
-
-.yoga-link:active {
-  background: var(--terracotta);
-  color: var(--paper);
-}
-
-/* ============ EMERGENCY ============ */
-.emerg-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.8rem;
-}
-
-.emerg-card {
-  background: var(--paper);
-  padding: 1.2rem 1rem;
-  border-radius: 4px;
-  border-left: 3px solid var(--terracotta);
-  box-shadow: var(--shadow);
-}
-
-.emerg-num {
-  font-family: var(--italic);
-  font-style: italic;
-  font-size: 1.4rem;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-
-.emerg-title {
-  font-family: var(--serif);
-  font-size: 0.95rem;
-  color: var(--ink);
-  margin-bottom: 0.4rem;
-  font-weight: 500;
-}
-
-.emerg-desc {
-  font-size: 0.78rem;
-  color: var(--ink-soft);
-  line-height: 1.6;
-}
-
-/* ============ WARNING ============ */
-.warning {
-  background: linear-gradient(to right, rgba(168, 90, 58, 0.06), transparent);
-  border-left: 3px solid var(--terracotta);
-  padding: 1.3rem 1.2rem;
-  margin: 1.5rem 0;
-  border-radius: 4px;
-}
-
-.warning-title {
-  font-family: var(--serif);
-  font-size: 0.95rem;
-  color: var(--terracotta);
-  margin-bottom: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-}
-
-.warning ul {
-  list-style: none;
-}
-
-.warning ul li {
-  padding: 0.3rem 0 0.3rem 1.3rem;
-  position: relative;
-  font-size: 0.83rem;
-  color: var(--ink-soft);
-  line-height: 1.7;
-}
-
-.warning ul li::before {
-  content: '※';
-  position: absolute;
-  left: 0;
-  color: var(--terracotta);
-}
-
-/* ============ STREAK BANNER ============ */
-.streak-banner {
-  background: linear-gradient(135deg, var(--accent-deep) 0%, var(--ink) 100%);
-  color: var(--bg-soft);
-  padding: 1.5rem 1.5rem;
-  border-radius: 4px;
-  margin-bottom: 1.5rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.streak-banner::before {
-  content: '整';
-  position: absolute;
-  right: -10px;
-  bottom: -30px;
-  font-family: var(--serif);
-  font-size: 8rem;
-  color: var(--gold);
-  opacity: 0.1;
-}
-
-.streak-mark {
-  font-family: var(--italic);
-  font-style: italic;
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
-  color: var(--gold);
-  margin-bottom: 0.4rem;
-}
-
-.streak-msg {
-  font-family: var(--serif);
-  font-size: 1rem;
-  color: var(--bg-soft);
-  letter-spacing: 0.05em;
-  line-height: 1.6;
-  position: relative;
-  z-index: 1;
-}
-
-/* ============ HISTORY ============ */
-.history-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.4rem;
-  background: var(--paper);
-  padding: 1rem;
-  border-radius: 4px;
-  box-shadow: var(--shadow);
-  margin-bottom: 1.5rem;
-}
-
-.history-cell {
-  aspect-ratio: 1;
-  background: var(--bg-soft);
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--italic);
-  font-size: 0.65rem;
-  color: var(--ink-muted);
-  position: relative;
-}
-
-.history-cell.has-data {
-  background: var(--moss);
-  color: var(--paper);
-}
-
-.history-cell.partial {
-  background: var(--gold);
-  color: var(--paper);
-}
-
-.history-cell.today {
-  outline: 2px solid var(--terracotta);
-  outline-offset: 1px;
-}
-
-.history-legend {
-  display: flex;
-  gap: 1rem;
-  font-size: 0.7rem;
-  color: var(--ink-muted);
-  margin-top: 0.5rem;
-  justify-content: center;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.legend-box {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
-}
-
+.yoga-day-label { font-family: var(--italic); font-style: italic; font-size: 0.7rem;
+  letter-spacing: 0.2em; color: var(--gold); margin-bottom: 0.4rem; text-transform: uppercase; }
+.yoga-title { font-family: var(--serif); font-size: 1.05rem; color: var(--ink);
+  margin-bottom: 0.5rem; font-weight: 500; line-height: 1.5; }
+.yoga-duration { font-size: 0.75rem; color: var(--ink-muted); letter-spacing: 0.1em; margin-bottom: 1rem; }
+.yoga-link { display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--serif); font-size: 0.85rem; color: var(--terracotta);
+  text-decoration: none; letter-spacing: 0.08em; padding: 0.5rem 1rem;
+  background: var(--bg-soft); border-radius: 20px; transition: all 0.3s; }
+.yoga-link::after { content: '→'; transition: transform 0.3s; }
+.yoga-link:active { background: var(--terracotta); color: var(--paper); }
+.emerg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+.emerg-card { background: var(--paper); padding: 1.2rem 1rem; border-radius: 4px;
+  border-left: 3px solid var(--terracotta); box-shadow: var(--shadow); }
+.emerg-num { font-family: var(--italic); font-style: italic; font-size: 1.4rem;
+  color: var(--gold); line-height: 1; margin-bottom: 0.5rem; }
+.emerg-title { font-family: var(--serif); font-size: 0.95rem; color: var(--ink);
+  margin-bottom: 0.4rem; font-weight: 500; }
+.emerg-desc { font-size: 0.78rem; color: var(--ink-soft); line-height: 1.6; }
+.warning { background: linear-gradient(to right, rgba(168, 90, 58, 0.06), transparent);
+  border-left: 3px solid var(--terracotta); padding: 1.3rem 1.2rem; margin: 1.5rem 0; border-radius: 4px; }
+.warning-title { font-family: var(--serif); font-size: 0.95rem; color: var(--terracotta);
+  margin-bottom: 0.7rem; font-weight: 500; letter-spacing: 0.05em; }
+.warning ul { list-style: none; }
+.warning ul li { padding: 0.3rem 0 0.3rem 1.3rem; position: relative; font-size: 0.83rem;
+  color: var(--ink-soft); line-height: 1.7; }
+.warning ul li::before { content: '※'; position: absolute; left: 0; color: var(--terracotta); }
+.streak-banner { background: linear-gradient(135deg, var(--accent-deep) 0%, var(--ink) 100%);
+  color: var(--bg-soft); padding: 1.5rem 1.5rem; border-radius: 4px;
+  margin-bottom: 1.5rem; position: relative; overflow: hidden; }
+.streak-banner::before { content: '整'; position: absolute; right: -10px; bottom: -30px;
+  font-family: var(--serif); font-size: 8rem; color: var(--gold); opacity: 0.1; }
+.streak-mark { font-family: var(--italic); font-style: italic; font-size: 0.7rem;
+  letter-spacing: 0.3em; color: var(--gold); margin-bottom: 0.4rem; }
+.streak-msg { font-family: var(--serif); font-size: 1rem; color: var(--bg-soft);
+  letter-spacing: 0.05em; line-height: 1.6; position: relative; z-index: 1; }
+.history-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.4rem;
+  background: var(--paper); padding: 1rem; border-radius: 4px; box-shadow: var(--shadow); margin-bottom: 1.5rem; }
+.history-cell { aspect-ratio: 1; background: var(--bg-soft); border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--italic); font-size: 0.65rem; color: var(--ink-muted); position: relative; }
+.history-cell.has-data { background: var(--moss); color: var(--paper); }
+.history-cell.partial { background: var(--gold); color: var(--paper); }
+.history-cell.today { outline: 2px solid var(--terracotta); outline-offset: 1px; }
+.history-legend { display: flex; gap: 1rem; font-size: 0.7rem; color: var(--ink-muted);
+  margin-top: 0.5rem; justify-content: center; }
+.legend-item { display: flex; align-items: center; gap: 0.3rem; }
+.legend-box { width: 12px; height: 12px; border-radius: 2px; }
 .legend-box.full { background: var(--moss); }
 .legend-box.partial { background: var(--gold); }
 .legend-box.empty { background: var(--bg-soft); border: 1px solid var(--line); }
-
-/* ============ RESET BUTTON ============ */
-.reset-btn {
-  display: block;
-  margin: 2rem auto 1rem;
-  padding: 0.7rem 1.5rem;
-  background: transparent;
-  border: 1px solid var(--ink-muted);
-  border-radius: 20px;
-  font-family: var(--serif);
-  font-size: 0.8rem;
-  color: var(--ink-muted);
-  cursor: pointer;
-  letter-spacing: 0.1em;
-}
-
-.reset-btn:active {
-  background: var(--ink-muted);
-  color: var(--paper);
-}
-
-/* ============ BOTTOM NAV ============ */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--paper);
-  border-top: 1px solid var(--line);
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  z-index: 100;
-  padding-bottom: env(safe-area-inset-bottom);
-  box-shadow: 0 -2px 10px rgba(42, 38, 32, 0.04);
-}
-
-.nav-btn {
-  background: none;
-  border: none;
-  padding: 0.7rem 0.3rem;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.2rem;
-  transition: color 0.3s;
-  color: var(--ink-muted);
-  font-family: inherit;
-}
-
-.nav-btn.active {
-  color: var(--terracotta);
-}
-
-.nav-icon {
-  font-family: var(--serif);
-  font-size: 1.1rem;
-  font-weight: 500;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  transition: all 0.3s;
-}
-
-.nav-btn.active .nav-icon {
-  background: var(--terracotta);
-  color: var(--paper);
-  border-color: var(--terracotta);
-}
-
-.nav-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  font-family: var(--serif);
-}
-
-/* ============ RESPONSIVE ============ */
+.reset-btn { display: block; margin: 2rem auto 1rem; padding: 0.7rem 1.5rem;
+  background: transparent; border: 1px solid var(--ink-muted); border-radius: 20px;
+  font-family: var(--serif); font-size: 0.8rem; color: var(--ink-muted);
+  cursor: pointer; letter-spacing: 0.1em; }
+.reset-btn:active { background: var(--ink-muted); color: var(--paper); }
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--paper);
+  border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(5, 1fr);
+  z-index: 100; padding-bottom: env(safe-area-inset-bottom);
+  box-shadow: 0 -2px 10px rgba(42, 38, 32, 0.04); }
+.nav-btn { background: none; border: none; padding: 0.7rem 0.3rem; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+  transition: color 0.3s; color: var(--ink-muted); font-family: inherit; }
+.nav-btn.active { color: var(--terracotta); }
+.nav-icon { font-family: var(--serif); font-size: 1.1rem; font-weight: 500;
+  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+  border: 1px solid currentColor; border-radius: 50%; transition: all 0.3s; }
+.nav-btn.active .nav-icon { background: var(--terracotta); color: var(--paper); border-color: var(--terracotta); }
+.nav-label { font-size: 0.65rem; letter-spacing: 0.1em; font-family: var(--serif); }
 @media (max-width: 380px) {
   .stats-grid { gap: 0.5rem; }
   .stat-card { padding: 1rem 0.4rem; }
   .stat-num { font-size: 1.6rem; }
   .emerg-grid { grid-template-columns: 1fr; }
 }
+.toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--ink); color: var(--paper); padding: 0.7rem 1.5rem; border-radius: 20px;
+  font-family: var(--serif); font-size: 0.85rem; letter-spacing: 0.1em; z-index: 200;
+  transition: transform 0.4s ease; pointer-events: none; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+.toast.show { transform: translateX(-50%) translateY(0); }
 
-/* ============ TOAST ============ */
-.toast {
-  position: fixed;
-  bottom: 90px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: var(--ink);
-  color: var(--paper);
-  padding: 0.7rem 1.5rem;
-  border-radius: 20px;
-  font-family: var(--serif);
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
-  z-index: 200;
-  transition: transform 0.4s ease;
-  pointer-events: none;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-}
-
-.toast.show {
-  transform: translateX(-50%) translateY(0);
-}
+/* Login overlay */
+.login-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(244, 241, 234, 0.95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center; z-index: 300; padding: 2rem; }
+.login-overlay.show { display: flex; }
+.login-card { background: var(--paper); padding: 2.5rem 2rem; border-radius: 6px;
+  max-width: 360px; width: 100%; box-shadow: var(--shadow); text-align: center; }
+.login-mark { font-family: var(--italic); font-style: italic; font-size: 0.7rem;
+  color: var(--gold); letter-spacing: 0.3em; margin-bottom: 0.8rem; }
+.login-title { font-family: var(--serif); font-size: 1.6rem; color: var(--ink);
+  letter-spacing: 0.2em; margin-bottom: 1rem; font-weight: 500; }
+.login-msg { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.8;
+  margin-bottom: 1.8rem; font-family: var(--serif); }
+.google-btn { display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.6rem; padding: 0.8rem 1.5rem; background: var(--ink); color: var(--paper);
+  border: none; border-radius: 24px; font-family: var(--serif); font-size: 0.9rem;
+  cursor: pointer; letter-spacing: 0.05em; width: 100%; }
+.google-btn:active { transform: scale(0.98); }
+.google-icon { width: 18px; height: 18px; background: white; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: Arial, sans-serif; font-size: 0.75rem; font-weight: bold; color: #4285f4; }
+.skip-btn { display: block; margin: 1rem auto 0; background: none; border: none;
+  font-family: var(--serif); font-size: 0.75rem; color: var(--ink-muted);
+  cursor: pointer; letter-spacing: 0.1em; text-decoration: underline; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="app-header">
-  <div class="app-mark">Daily Yoga &amp; Wellness</div>
-  <h1 class="app-title">整</h1>
-  <div class="app-sub">Totonoe</div>
+  <div class="app-header-left"></div>
+  <div>
+    <div class="app-mark">Daily Yoga &amp; Wellness</div>
+    <h1 class="app-title">整</h1>
+    <div class="app-sub">Totonoe</div>
+  </div>
+  <div class="app-header-right">
+    <button class="auth-btn" id="auth-btn" onclick="toggleAuth()">
+      <span id="auth-label">未ログイン</span>
+      <span class="sync-indicator" id="sync-ind"></span>
+    </button>
+  </div>
 </header>
 
-<!-- ===== HOME PAGE ===== -->
 <div class="container">
 
 <div class="page active" id="page-home">
-
-  <!-- Stats -->
   <div class="stats-grid">
     <div class="stat-card">
       <div><span class="stat-num" id="stat-streak">0</span><span class="stat-unit">日</span></div>
@@ -773,7 +280,6 @@ body {
     </div>
   </div>
 
-  <!-- Date bar -->
   <div class="date-bar">
     <div class="date-info">
       <span class="date-day" id="date-day">—</span>
@@ -785,52 +291,31 @@ body {
     </div>
   </div>
 
-  <!-- Streak banner -->
   <div class="streak-banner" id="streak-banner" style="display:none;">
     <div class="streak-mark">— Today's Word —</div>
     <div class="streak-msg" id="streak-msg">日々の小さな積み重ねが、やがてリズムを変える。</div>
   </div>
 
-  <!-- Today's checklist (auto-loaded based on time of day) -->
   <h2 class="section-title">今日の習慣 <span class="section-title-en">Daily Habits</span></h2>
-
   <div class="check-block">
-    <div class="check-block-header">
-      <span class="check-block-title">朝</span>
-      <span class="check-block-en">Morning · 起床後</span>
-    </div>
+    <div class="check-block-header"><span class="check-block-title">朝</span><span class="check-block-en">Morning · 起床後</span></div>
     <ul class="check-list" id="list-morning"></ul>
   </div>
-
   <div class="check-block">
-    <div class="check-block-header">
-      <span class="check-block-title">昼</span>
-      <span class="check-block-en">Noon · 昼食前後</span>
-    </div>
+    <div class="check-block-header"><span class="check-block-title">昼</span><span class="check-block-en">Noon · 昼食前後</span></div>
     <ul class="check-list" id="list-noon"></ul>
   </div>
-
   <div class="check-block">
-    <div class="check-block-header">
-      <span class="check-block-title">午後</span>
-      <span class="check-block-en">Afternoon · 仕事中</span>
-    </div>
+    <div class="check-block-header"><span class="check-block-title">午後</span><span class="check-block-en">Afternoon · 仕事中</span></div>
     <ul class="check-list" id="list-afternoon"></ul>
   </div>
-
   <div class="check-block">
-    <div class="check-block-header">
-      <span class="check-block-title">夜</span>
-      <span class="check-block-en">Night · 就寝前</span>
-    </div>
+    <div class="check-block-header"><span class="check-block-title">夜</span><span class="check-block-en">Night · 就寝前</span></div>
     <ul class="check-list" id="list-night"></ul>
   </div>
-
 </div>
 
-<!-- ===== YOGA PAGE ===== -->
 <div class="page" id="page-yoga">
-
   <h2 class="section-title">朝のヨガ <span class="section-title-en">Morning Yoga</span></h2>
   <div class="yoga-card morning">
     <div class="yoga-day-label">Every Morning</div>
@@ -844,11 +329,10 @@ body {
     <div class="yoga-duration">約10分 · 飽きたら切替</div>
     <a href="https://www.youtube.com/watch?v=sd9d1ItsD3k" target="_blank" class="yoga-link">動画を開く</a>
   </div>
-
   <h2 class="section-title">昼のヨガ <span class="section-title-en">Noon Yoga</span></h2>
   <div class="yoga-card noon">
     <div class="yoga-day-label">Desk Work</div>
-    <div class="yoga-title">肩こり・腕の張りに効くヨガ</div>
+    <div class="yoga-title">肩こり・腕の張りに効く�ヨガ</div>
     <div class="yoga-duration">食後15〜20分後に</div>
     <a href="https://www.youtube.com/watch?v=DusCiQ4vyR4" target="_blank" class="yoga-link">動画を開く</a>
   </div>
@@ -858,7 +342,6 @@ body {
     <div class="yoga-duration">時間がない日に</div>
     <a href="https://www.youtube.com/watch?v=mDdaC6a3_MA" target="_blank" class="yoga-link">動画を開く</a>
   </div>
-
   <h2 class="section-title">夜のヨガ（曜日別） <span class="section-title-en">Night Yoga</span></h2>
   <div class="day-tabs" id="day-tabs">
     <button class="day-tab" data-day="0">日曜</button>
@@ -870,48 +353,19 @@ body {
     <button class="day-tab" data-day="6">土曜</button>
   </div>
   <div id="night-yoga-card"></div>
-
 </div>
 
-<!-- ===== EMERGENCY PAGE ===== -->
 <div class="page" id="page-emergency">
-
   <h2 class="section-title">眠気の対処 <span class="section-title-en">When Drowsy</span></h2>
   <p style="font-size:0.85rem; color:var(--ink-soft); margin-bottom:1.2rem; line-height:1.8;">気合いで乗り切るより、5分の対処が結果的に効率を上げます。</p>
-
   <div class="emerg-grid">
-    <div class="emerg-card">
-      <div class="emerg-num">01</div>
-      <div class="emerg-title">パワーナップ</div>
-      <div class="emerg-desc">コーヒー後15分以内の仮眠。机に伏せるだけでもOK。30分超は逆効果。</div>
-    </div>
-    <div class="emerg-card">
-      <div class="emerg-num">02</div>
-      <div class="emerg-title">手首を冷やす</div>
-      <div class="emerg-desc">トイレで冷水を当てるだけで体温が下がり覚醒度UP。会議中にも有効。</div>
-    </div>
-    <div class="emerg-card">
-      <div class="emerg-num">03</div>
-      <div class="emerg-title">階段昇降</div>
-      <div class="emerg-desc">立ち上がって動くだけで血流改善。1〜2階分で一気に目覚める。</div>
-    </div>
-    <div class="emerg-card">
-      <div class="emerg-num">04</div>
-      <div class="emerg-title">日光を浴びる</div>
-      <div class="emerg-desc">外に1〜2分。曇りでも室内の何倍も明るく、メラトニンが抑制される。</div>
-    </div>
-    <div class="emerg-card">
-      <div class="emerg-num">05</div>
-      <div class="emerg-title">ツボ押し</div>
-      <div class="emerg-desc">合谷（親指と人差し指の間）・中衝（中指の爪生え際）を30秒。</div>
-    </div>
-    <div class="emerg-card">
-      <div class="emerg-num">06</div>
-      <div class="emerg-title">活性化呼吸</div>
-      <div class="emerg-desc">鼻から短く強く息を吐く（カパラバティ）を20〜30回。交感神経を刺激。</div>
-    </div>
+    <div class="emerg-card"><div class="emerg-num">01</div><div class="emerg-title">パワーナップ</div><div class="emerg-desc">コーヒー後15分以内の仮眠。机に伏せるだけでもOK。30分超は逆効果。</div></div>
+    <div class="emerg-card"><div class="emerg-num">02</div><div class="emerg-title">手首を冷やす</div><div class="emerg-desc">トイレで冷水を当てるだけで体温が下がり覚醒度UP。会議中にも有効。</div></div>
+    <div class="emerg-card"><div class="emerg-num">03</div><div class="emerg-title">階段昇降</div><div class="emerg-desc">立ち上がって動くだけで血流改善。1〜2階分で一気に目覚める。</div></div>
+    <div class="emerg-card"><div class="emerg-num">04</div><div class="emerg-title">日光を浴びる</div><div class="emerg-desc">外に1〜2分。曇りでも室内の何倍も明るく、メラトニンが抑制される。</div></div>
+    <div class="emerg-card"><div class="emerg-num">05</div><div class="emerg-title">ツボ押し</div><div class="emerg-desc">合谷（親指と人差し指の間）・中衝（中指の爪生え際）を30秒。</div></div>
+    <div class="emerg-card"><div class="emerg-num">06</div><div class="emerg-title">活性化呼吸</div><div class="emerg-desc">鼻から短く強く息を吐く（カパラバティ）を20〜30回。交感神経を刺激。</div></div>
   </div>
-
   <div class="warning">
     <div class="warning-title">気をつけたいこと</div>
     <ul>
@@ -921,7 +375,6 @@ body {
       <li><strong>運転中は必ず仮眠</strong> 命に関わるので我慢しない</li>
     </ul>
   </div>
-
   <h2 class="section-title">医療受診の目安 <span class="section-title-en">See a Doctor</span></h2>
   <div class="warning">
     <div class="warning-title">以下に当てはまるなら受診を</div>
@@ -934,21 +387,16 @@ body {
     </ul>
     <p style="margin-top:0.8rem; font-size:0.83rem; color:var(--ink-soft);">→ 睡眠外来 / 呼吸器内科 / 耳鼻咽喉科で相談を。</p>
   </div>
-
 </div>
 
-<!-- ===== STATS PAGE ===== -->
 <div class="page" id="page-stats">
-
   <h2 class="section-title">今月の記録 <span class="section-title-en">This Month</span></h2>
-
   <div class="history-grid" id="history-grid"></div>
   <div class="history-legend">
     <div class="legend-item"><div class="legend-box full"></div>達成</div>
     <div class="legend-item"><div class="legend-box partial"></div>一部</div>
     <div class="legend-item"><div class="legend-box empty"></div>未</div>
   </div>
-
   <h2 class="section-title">継続のコツ <span class="section-title-en">Tips</span></h2>
   <div style="background:var(--paper); padding:1.3rem; border-radius:4px; box-shadow:var(--shadow);">
     <ul style="list-style:none; font-size:0.88rem; color:var(--ink-soft); line-height:2;">
@@ -959,14 +407,10 @@ body {
       <li>◯ 体調が悪い日は無理せず休む</li>
     </ul>
   </div>
-
   <button class="reset-btn" id="reset-btn">記録をすべてリセット</button>
-
 </div>
 
-<!-- ===== INFO PAGE ===== -->
 <div class="page" id="page-info">
-
   <h2 class="section-title">セルフチェック <span class="section-title-en">Self Check</span></h2>
   <div style="background:var(--paper); padding:1.3rem; border-radius:4px; box-shadow:var(--shadow); margin-bottom:1.5rem;">
     <div style="font-family:var(--italic); font-style:italic; color:var(--gold); font-size:0.8rem; letter-spacing:0.2em; margin-bottom:0.3rem;">Weekly</div>
@@ -979,7 +423,6 @@ body {
       <li>□ 来週の調整を1つ決める</li>
     </ul>
   </div>
-
   <div style="background:var(--paper); padding:1.3rem; border-radius:4px; box-shadow:var(--shadow); margin-bottom:1.5rem;">
     <div style="font-family:var(--italic); font-style:italic; color:var(--gold); font-size:0.8rem; letter-spacing:0.2em; margin-bottom:0.3rem;">Monthly</div>
     <div style="font-family:var(--serif); font-size:1rem; color:var(--ink); margin-bottom:0.8rem; font-weight:500;">月1回</div>
@@ -990,7 +433,6 @@ body {
       <li>□ 体の硬さの変化を確認</li>
     </ul>
   </div>
-
   <h2 class="section-title">体の硬さチェック <span class="section-title-en">Flexibility</span></h2>
   <div style="background:var(--paper); padding:1.3rem; border-radius:4px; box-shadow:var(--shadow);">
     <ul style="list-style:none; font-size:0.85rem; color:var(--ink-soft); line-height:2;">
@@ -1001,47 +443,73 @@ body {
     </ul>
     <p style="font-size:0.8rem; color:var(--ink-muted); margin-top:1rem; line-height:1.7;">これらができないと対応する部位が硬いサイン。陰ヨガ・ストレッチで改善できます。</p>
   </div>
-
-  <h2 class="section-title">about <span class="section-title-en">v0.1</span></h2>
+  <h2 class="section-title">about <span class="section-title-en">v0.2</span></h2>
   <div style="background:var(--paper); padding:1.3rem; border-radius:4px; box-shadow:var(--shadow); font-size:0.83rem; color:var(--ink-soft); line-height:1.9;">
     <p style="font-family:var(--serif); color:var(--ink); margin-bottom:0.8rem; letter-spacing:0.05em;">整 — Totonoe</p>
     <p>食後の眠気・午後のだるさ・体の硬さを暮らしのリズムから整えるための個人用習慣アプリ。</p>
-    <p style="margin-top:0.8rem; font-size:0.75rem; color:var(--ink-muted);">データはこの端末のブラウザに保存されます。<br>v0.1 · Phase 1 (Local Storage)</p>
+    <p style="margin-top:0.8rem; font-size:0.75rem; color:var(--ink-muted);">v0.2 · Phase 2 (Firebase Sync)<br>Googleログインで端末間同期に対応</p>
   </div>
-
 </div>
 
 </div>
 
-<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-  <button class="nav-btn active" data-page="home">
-    <span class="nav-icon">家</span>
-    <span class="nav-label">ホーム</span>
-  </button>
-  <button class="nav-btn" data-page="yoga">
-    <span class="nav-icon">瑜</span>
-    <span class="nav-label">ヨガ</span>
-  </button>
-  <button class="nav-btn" data-page="emergency">
-    <span class="nav-icon">急</span>
-    <span class="nav-label">対処</span>
-  </button>
-  <button class="nav-btn" data-page="stats">
-    <span class="nav-icon">録</span>
-    <span class="nav-label">記録</span>
-  </button>
-  <button class="nav-btn" data-page="info">
-    <span class="nav-icon">識</span>
-    <span class="nav-label">情報</span>
-  </button>
+  <button class="nav-btn active" data-page="home"><span class="nav-icon">家</span><span class="nav-label">ホーム</span></button>
+  <button class="nav-btn" data-page="yoga"><span class="nav-icon">瑜</span><span class="nav-label">ヨガ</span></button>
+  <button class="nav-btn" data-page="emergency"><span class="nav-icon">急</span><span class="nav-label">対処</span></button>
+  <button class="nav-btn" data-page="stats"><span class="nav-icon">録</span><span class="nav-label">記録</span></button>
+  <button class="nav-btn" data-page="info"><span class="nav-icon">識</span><span class="nav-label">情報</span></button>
 </nav>
 
-<!-- TOAST -->
 <div class="toast" id="toast">記録しました</div>
 
+<div class="login-overlay" id="login-overlay">
+  <div class="login-card">
+    <div class="login-mark">— Sign In —</div>
+    <h2 class="login-title">整</h2>
+    <p class="login-msg">Googleアカウントでログインすると、<br>iPhone・PC・どの端末からでも<br>同じ記録が見られます。</p>
+    <button class="google-btn" onclick="signInWithGoogle()">
+      <span class="google-icon">G</span>
+      <span>Googleでログイン</span>
+    </button>
+    <button class="skip-btn" onclick="closeLogin()">この端末だけで使う</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, deleteDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAhi__j-HtS-JwD1ys86Y-dGTu1eKD_kAg",
+  authDomain: "totonoe-app.firebaseapp.com",
+  projectId: "totonoe-app",
+  storageBucket: "totonoe-app.firebasestorage.app",
+  messagingSenderId: "360525829071",
+  appId: "1:360525829071:web:8fe96b6905fcbd90d3f8ba"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+
+window._firebase = { auth, db, provider, signInWithPopup, signOut, doc, setDoc, getDoc, deleteDoc, onAuthStateChanged };
+
+onAuthStateChanged(auth, (user) => {
+  window._currentUser = user;
+  if (user) {
+    onSignedIn(user);
+  } else {
+    onSignedOut();
+  }
+});
+</script>
+
 <script>
-// ============ DATA ============
 const HABITS = {
   morning: [
     { id: 'm1', text: '<strong>カーテンを開けて朝日を浴びる</strong>', note: '体内時計をリセット（2分）' },
@@ -1058,12 +526,12 @@ const HABITS = {
   afternoon: [
     { id: 'a1', text: '<strong>15時以降のカフェインを控える</strong>', note: '夜の睡眠の質を守る' },
     { id: 'a2', text: '<strong>1時間に1回</strong>立ち上がる' },
-    { id: 'a3', text: '水分補給（合計1.5L目安）' }
+    { id: 'a3', text: '水分補給(合計1.5L目安)' }
   ],
   night: [
     { id: 'g1', text: '<strong>夕食は就寝2〜3時間前</strong>まで' },
     { id: 'g2', text: '<strong>40度のお風呂に15分</strong>浸かる', note: 'シャワーのみは避ける' },
-    { id: 'g3', text: '<strong>夜ヨガ</strong>（曜日別）', note: '就寝1〜2時間前まで' },
+    { id: 'g3', text: '<strong>夜ヨガ</strong>(曜日別)', note: '就寝1〜2時間前まで' },
     { id: 'g4', text: '<strong>足を壁に上げるポーズ</strong>5分', note: '副交感神経を優位に' },
     { id: 'g5', text: '就寝30分前から<strong>スマホを見ない</strong>' },
     { id: 'g6', text: '<strong>同じ時間に寝る</strong>' }
@@ -1092,28 +560,124 @@ const QUOTES = [
 
 const DAY_NAMES_JP = ['日', '月', '火', '水', '木', '金', '土'];
 const DAY_NAMES_EN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-// ============ STORAGE ============
 const STORAGE_KEY = 'totonoe_v1';
 
-function loadData() {
+let appData = loadLocal();
+let saveTimer = null;
+
+function loadLocal() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : { history: {}, settings: {} };
-  } catch (e) {
-    return { history: {}, settings: {} };
-  }
+  } catch (e) { return { history: {}, settings: {} }; }
 }
 
-function saveData(data) {
+function saveLocal(data) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (e) { console.error(e); }
+}
+
+async function saveCloud(data) {
+  if (!window._currentUser || !window._firebase) return;
+  setSyncIndicator('syncing');
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    const { db, doc, setDoc } = window._firebase;
+    await setDoc(doc(db, 'users', window._currentUser.uid, 'data', 'main'), data);
+    setSyncIndicator('synced');
   } catch (e) {
-    console.error('保存エラー', e);
+    console.error('Cloud save failed:', e);
+    setSyncIndicator('');
   }
 }
 
-let appData = loadData();
+async function loadCloud() {
+  if (!window._currentUser || !window._firebase) return null;
+  try {
+    const { db, doc, getDoc } = window._firebase;
+    const snap = await getDoc(doc(db, 'users', window._currentUser.uid, 'data', 'main'));
+    return snap.exists() ? snap.data() : null;
+  } catch (e) { console.error('Cloud load failed:', e); return null; }
+}
+
+function saveAll() {
+  saveLocal(appData);
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => saveCloud(appData), 600);
+}
+
+function setSyncIndicator(state) {
+  const ind = document.getElementById('sync-ind');
+  ind.classList.remove('synced', 'syncing');
+  if (state) ind.classList.add(state);
+}
+
+window.onSignedIn = async function(user) {
+  const btn = document.getElementById('auth-btn');
+  const label = document.getElementById('auth-label');
+  btn.classList.add('signed-in');
+  const name = user.displayName ? user.displayName.split(' ')[0] : 'ログイン中';
+  label.textContent = name;
+  setSyncIndicator('syncing');
+  const cloudData = await loadCloud();
+  if (cloudData && Object.keys(cloudData.history || {}).length > 0) {
+    const localCount = Object.keys(appData.history || {}).length;
+    const cloudCount = Object.keys(cloudData.history || {}).length;
+    if (localCount > cloudCount) {
+      const merged = mergeData(cloudData, appData);
+      appData = merged;
+      await saveCloud(appData);
+    } else {
+      appData = cloudData;
+      saveLocal(appData);
+    }
+  } else if (Object.keys(appData.history || {}).length > 0) {
+    await saveCloud(appData);
+  }
+  setSyncIndicator('synced');
+  refreshUI();
+  closeLogin();
+};
+
+window.onSignedOut = function() {
+  const btn = document.getElementById('auth-btn');
+  const label = document.getElementById('auth-label');
+  btn.classList.remove('signed-in');
+  label.textContent = 'ログイン';
+  setSyncIndicator('');
+};
+
+function mergeData(a, b) {
+  const merged = { history: {}, settings: { ...a.settings, ...b.settings } };
+  const allKeys = new Set([...Object.keys(a.history || {}), ...Object.keys(b.history || {})]);
+  allKeys.forEach(key => {
+    merged.history[key] = { ...(a.history?.[key] || {}), ...(b.history?.[key] || {}) };
+  });
+  return merged;
+}
+
+window.toggleAuth = function() {
+  if (window._currentUser) {
+    if (confirm('ログアウトしますか?\n（記録はクラウドに保存されています）')) {
+      window._firebase.signOut(window._firebase.auth);
+    }
+  } else {
+    document.getElementById('login-overlay').classList.add('show');
+  }
+};
+
+window.signInWithGoogle = async function() {
+  try {
+    await window._firebase.signInWithPopup(window._firebase.auth, window._firebase.provider);
+  } catch (e) {
+    console.error('Login failed:', e);
+    if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') {
+      alert('ログインに失敗しました：' + e.message);
+    }
+  }
+};
+
+window.closeLogin = function() {
+  document.getElementById('login-overlay').classList.remove('show');
+};
 
 function getTodayKey() {
   const d = new Date();
@@ -1122,13 +686,10 @@ function getTodayKey() {
 
 function getTodayData() {
   const key = getTodayKey();
-  if (!appData.history[key]) {
-    appData.history[key] = {};
-  }
+  if (!appData.history[key]) appData.history[key] = {};
   return appData.history[key];
 }
 
-// ============ TOAST ============
 function showToast(msg) {
   const toast = document.getElementById('toast');
   toast.textContent = msg;
@@ -1136,7 +697,6 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove('show'), 1600);
 }
 
-// ============ RENDER CHECKLISTS ============
 function renderChecklist(time) {
   const ul = document.getElementById('list-' + time);
   ul.innerHTML = '';
@@ -1145,13 +705,8 @@ function renderChecklist(time) {
     const li = document.createElement('li');
     li.className = 'check-item';
     if (today[item.id]) li.classList.add('done');
-    li.innerHTML = `
-      <div class="check-box"></div>
-      <div class="check-text">${item.text}${item.note ? `<span class="check-note">${item.note}</span>` : ''}</div>
-    `;
-    li.addEventListener('click', () => {
-      toggleHabit(item.id, li);
-    });
+    li.innerHTML = `<div class="check-box"></div><div class="check-text">${item.text}${item.note ? `<span class="check-note">${item.note}</span>` : ''}</div>`;
+    li.addEventListener('click', () => toggleHabit(item.id, li));
     ul.appendChild(li);
   });
 }
@@ -1166,11 +721,10 @@ function toggleHabit(id, li) {
     li.classList.add('done');
     showToast('記録しました');
   }
-  saveData(appData);
+  saveAll();
   updateStats();
 }
 
-// ============ STATS ============
 function getTotalHabits() {
   return HABITS.morning.length + HABITS.noon.length + HABITS.afternoon.length + HABITS.night.length;
 }
@@ -1184,11 +738,8 @@ function getDayCompletion(dateKey) {
 function updateStats() {
   const total = getTotalHabits();
   const todayDone = getDayCompletion(getTodayKey());
-
   document.getElementById('progress-done').textContent = todayDone;
   document.getElementById('progress-total').textContent = total;
-
-  // streak: 連続して何かしらチェックがある日数
   let streak = 0;
   const d = new Date();
   while (true) {
@@ -1198,7 +749,6 @@ function updateStats() {
       streak++;
       d.setDate(d.getDate() - 1);
     } else {
-      // 今日が未達成でも、昨日から連続を数え始める
       if (key === getTodayKey() && completion < Math.ceil(total * 0.5)) {
         d.setDate(d.getDate() - 1);
         continue;
@@ -1207,15 +757,11 @@ function updateStats() {
     }
   }
   document.getElementById('stat-streak').textContent = streak;
-
-  // 累計達成日数（半分以上達成した日）
   let totalAchieved = 0;
   Object.keys(appData.history).forEach(key => {
     if (getDayCompletion(key) >= Math.ceil(total * 0.5)) totalAchieved++;
   });
   document.getElementById('stat-total').textContent = totalAchieved;
-
-  // 今月達成率
   const now = new Date();
   const monthPrefix = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
   const daysInMonthSoFar = now.getDate();
@@ -1228,15 +774,12 @@ function updateStats() {
   document.getElementById('stat-rate').textContent = rate;
 }
 
-// ============ DATE BAR ============
 function updateDateBar() {
   const d = new Date();
   document.getElementById('date-day').textContent = DAY_NAMES_EN[d.getDay()];
-  const md = `${d.getMonth()+1}月${d.getDate()}日（${DAY_NAMES_JP[d.getDay()]}）`;
-  document.getElementById('date-full').textContent = md;
+  document.getElementById('date-full').textContent = `${d.getMonth()+1}月${d.getDate()}日（${DAY_NAMES_JP[d.getDay()]}）`;
 }
 
-// ============ STREAK MESSAGE ============
 function updateStreakBanner() {
   const banner = document.getElementById('streak-banner');
   banner.style.display = 'block';
@@ -1244,25 +787,13 @@ function updateStreakBanner() {
   document.getElementById('streak-msg').textContent = QUOTES[idx];
 }
 
-// ============ NIGHT YOGA TAB ============
 function renderNightYoga(dayIdx) {
   const data = NIGHT_YOGA[dayIdx];
   const card = document.getElementById('night-yoga-card');
-  card.innerHTML = `
-    <div class="yoga-card night">
-      <div class="yoga-day-label">${data.day}</div>
-      <div class="yoga-title">${data.title}</div>
-      <div class="yoga-duration">${data.dur}</div>
-      <a href="${data.url}" target="_blank" class="yoga-link">動画を開く</a>
-    </div>
-  `;
-  // active tab
-  document.querySelectorAll('.day-tab').forEach(t => {
-    t.classList.toggle('active', parseInt(t.dataset.day) === dayIdx);
-  });
+  card.innerHTML = `<div class="yoga-card night"><div class="yoga-day-label">${data.day}</div><div class="yoga-title">${data.title}</div><div class="yoga-duration">${data.dur}</div><a href="${data.url}" target="_blank" class="yoga-link">動画を開く</a></div>`;
+  document.querySelectorAll('.day-tab').forEach(t => t.classList.toggle('active', parseInt(t.dataset.day) === dayIdx));
 }
 
-// ============ HISTORY GRID ============
 function renderHistory() {
   const grid = document.getElementById('history-grid');
   grid.innerHTML = '';
@@ -1273,32 +804,34 @@ function renderHistory() {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const total = getTotalHabits();
   const todayKey = getTodayKey();
-
-  // empty cells before first day
   for (let i = 0; i < firstDay; i++) {
     const cell = document.createElement('div');
     cell.className = 'history-cell';
     cell.style.background = 'transparent';
     grid.appendChild(cell);
   }
-
   for (let i = 1; i <= daysInMonth; i++) {
     const cell = document.createElement('div');
     cell.className = 'history-cell';
     const key = `${year}-${String(month+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
     const done = getDayCompletion(key);
-    if (done >= Math.ceil(total * 0.5)) {
-      cell.classList.add('has-data');
-    } else if (done > 0) {
-      cell.classList.add('partial');
-    }
+    if (done >= Math.ceil(total * 0.5)) cell.classList.add('has-data');
+    else if (done > 0) cell.classList.add('partial');
     if (key === todayKey) cell.classList.add('today');
     cell.textContent = i;
     grid.appendChild(cell);
   }
 }
 
-// ============ NAVIGATION ============
+function refreshUI() {
+  renderChecklist('morning');
+  renderChecklist('noon');
+  renderChecklist('afternoon');
+  renderChecklist('night');
+  updateStats();
+  renderHistory();
+}
+
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
@@ -1307,31 +840,24 @@ function showPage(name) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-document.querySelectorAll('.nav-btn').forEach(btn => {
-  btn.addEventListener('click', () => showPage(btn.dataset.page));
-});
+document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', () => showPage(btn.dataset.page)));
+document.querySelectorAll('.day-tab').forEach(tab => tab.addEventListener('click', () => renderNightYoga(parseInt(tab.dataset.day))));
 
-// ============ DAY TABS ============
-document.querySelectorAll('.day-tab').forEach(tab => {
-  tab.addEventListener('click', () => renderNightYoga(parseInt(tab.dataset.day)));
-});
-
-// ============ RESET ============
-document.getElementById('reset-btn').addEventListener('click', () => {
+document.getElementById('reset-btn').addEventListener('click', async () => {
   if (confirm('すべての記録を削除します。本当によろしいですか？')) {
     appData = { history: {}, settings: {} };
-    saveData(appData);
-    renderChecklist('morning');
-    renderChecklist('noon');
-    renderChecklist('afternoon');
-    renderChecklist('night');
-    updateStats();
-    renderHistory();
+    saveLocal(appData);
+    if (window._currentUser && window._firebase) {
+      try {
+        const { db, doc, deleteDoc } = window._firebase;
+        await deleteDoc(doc(db, 'users', window._currentUser.uid, 'data', 'main'));
+      } catch (e) { console.error(e); }
+    }
+    refreshUI();
     showToast('リセットしました');
   }
 });
 
-// ============ INIT ============
 renderChecklist('morning');
 renderChecklist('noon');
 renderChecklist('afternoon');
@@ -1341,12 +867,9 @@ updateStats();
 updateStreakBanner();
 renderNightYoga(new Date().getDay());
 
-// midnight refresh
 setInterval(() => {
   const newKey = getTodayKey();
-  if (window._lastDateKey && window._lastDateKey !== newKey) {
-    location.reload();
-  }
+  if (window._lastDateKey && window._lastDateKey !== newKey) location.reload();
   window._lastDateKey = newKey;
 }, 60000);
 window._lastDateKey = getTodayKey();
