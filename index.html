@@ -149,6 +149,71 @@ body {
   background: var(--bg-soft); border-radius: 20px; transition: all 0.3s; }
 .yoga-link::after { content: '→'; transition: transform 0.3s; }
 .yoga-link:active { background: var(--terracotta); color: var(--paper); }
+/* Bed yoga (lying down) */
+.yoga-card.bed { border-top-color: var(--moss); }
+.flow-tabs { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
+.flow-tab { flex: 1; padding: 0.6rem 0.5rem; background: var(--paper); border: 1px solid var(--line);
+  border-radius: 3px; font-family: var(--serif); font-size: 0.78rem; color: var(--ink-soft);
+  cursor: pointer; letter-spacing: 0.05em; transition: all 0.3s; }
+.flow-tab.active { background: var(--moss); color: var(--paper); border-color: var(--moss); }
+.flow-tab:active { transform: scale(0.96); }
+.flow-card { background: var(--paper); border-radius: 4px; box-shadow: var(--shadow);
+  border-top: 3px solid var(--moss); padding: 1.4rem 1.3rem; margin-bottom: 1.5rem; }
+.flow-lead { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.8; margin-bottom: 1rem; }
+.flow-meta { font-family: var(--italic); font-style: italic; font-size: 0.72rem;
+  color: var(--gold); letter-spacing: 0.2em; margin-bottom: 0.3rem; }
+.flow-name { font-family: var(--serif); font-size: 1.05rem; color: var(--ink);
+  font-weight: 500; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.pose-list { list-style: none; margin-bottom: 1.2rem; }
+.pose-item { display: flex; gap: 0.8rem; padding: 0.7rem 0; border-top: 1px solid var(--line); }
+.pose-item:first-child { border-top: none; padding-top: 0; }
+.pose-idx { font-family: var(--italic); font-style: italic; font-size: 0.9rem;
+  color: var(--gold); flex-shrink: 0; width: 1.4rem; line-height: 1.5; }
+.pose-body { flex: 1; }
+.pose-name { font-family: var(--serif); font-size: 0.9rem; color: var(--ink); font-weight: 500; }
+.pose-sec { font-family: var(--italic); font-style: italic; font-size: 0.75rem;
+  color: var(--ink-muted); margin-left: 0.5rem; }
+.pose-desc { font-size: 0.78rem; color: var(--ink-soft); line-height: 1.7; margin-top: 0.2rem; }
+.start-btn { display: block; width: 100%; padding: 0.85rem 1.5rem; background: var(--moss);
+  color: var(--paper); border: none; border-radius: 24px; font-family: var(--serif);
+  font-size: 0.9rem; letter-spacing: 0.15em; cursor: pointer; }
+.start-btn:active { transform: scale(0.98); }
+
+/* Guided flow player */
+.flow-overlay { position: fixed; inset: 0; background: linear-gradient(160deg, var(--accent-deep) 0%, var(--ink) 100%);
+  color: var(--bg-soft); display: none; flex-direction: column; z-index: 400;
+  padding: calc(1.5rem + env(safe-area-inset-top)) 1.5rem calc(1.5rem + env(safe-area-inset-bottom)); }
+.flow-overlay.show { display: flex; }
+.flow-top { display: flex; justify-content: space-between; align-items: center; }
+.flow-step { font-family: var(--italic); font-style: italic; font-size: 0.75rem;
+  letter-spacing: 0.25em; color: var(--gold); }
+.flow-close { background: none; border: 1px solid rgba(244, 241, 234, 0.35); color: var(--bg-soft);
+  width: 32px; height: 32px; border-radius: 50%; font-family: var(--serif);
+  font-size: 0.9rem; cursor: pointer; line-height: 1; }
+.flow-stage { flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; text-align: center; gap: 0.6rem; }
+.flow-pose { font-family: var(--serif); font-size: 1.5rem; color: var(--bg-soft);
+  letter-spacing: 0.1em; font-weight: 500; }
+.flow-pose-en { font-family: var(--italic); font-style: italic; font-size: 0.8rem;
+  color: var(--gold); letter-spacing: 0.2em; }
+.flow-desc { font-size: 0.85rem; color: rgba(244, 241, 234, 0.8); line-height: 1.9;
+  max-width: 22rem; margin-top: 0.4rem; }
+.flow-ring { position: relative; width: 168px; height: 168px; margin: 1rem 0 0.4rem; }
+.flow-ring svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+.flow-ring circle { fill: none; stroke-width: 3; }
+.flow-ring .track { stroke: rgba(244, 241, 234, 0.15); }
+.flow-ring .bar { stroke: var(--gold); stroke-linecap: round; transition: stroke-dashoffset 0.9s linear; }
+.flow-count { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: var(--italic); font-style: italic; font-size: 2.6rem; color: var(--bg-soft); }
+.flow-next { font-size: 0.75rem; color: rgba(244, 241, 234, 0.55); letter-spacing: 0.08em; }
+.flow-controls { display: flex; gap: 0.6rem; align-items: center; justify-content: center; }
+.flow-ctrl { background: none; border: 1px solid rgba(244, 241, 234, 0.35); color: var(--bg-soft);
+  padding: 0.6rem 1.1rem; border-radius: 22px; font-family: var(--serif);
+  font-size: 0.8rem; letter-spacing: 0.1em; cursor: pointer; }
+.flow-ctrl.main { background: var(--gold); border-color: var(--gold); color: var(--accent-deep);
+  min-width: 7.5rem; }
+.flow-ctrl:active { transform: scale(0.97); }
+.flow-done { font-family: var(--serif); font-size: 1.2rem; letter-spacing: 0.15em; }
 .emerg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
 .emerg-card { background: var(--paper); padding: 1.2rem 1rem; border-radius: 4px;
   border-left: 3px solid var(--terracotta); box-shadow: var(--shadow); }
@@ -332,7 +397,7 @@ body {
   <h2 class="section-title">昼のヨガ <span class="section-title-en">Noon Yoga</span></h2>
   <div class="yoga-card noon">
     <div class="yoga-day-label">Desk Work</div>
-    <div class="yoga-title">肩こり・腕の張りに効く�ヨガ</div>
+    <div class="yoga-title">肩こり・腕の張りに効くヨガ</div>
     <div class="yoga-duration">食後15〜20分後に</div>
     <a href="https://www.youtube.com/watch?v=DusCiQ4vyR4" target="_blank" class="yoga-link">動画を開く</a>
   </div>
@@ -353,6 +418,24 @@ body {
     <button class="day-tab" data-day="6">土曜</button>
   </div>
   <div id="night-yoga-card"></div>
+  <h2 class="section-title">寝たままヨガ <span class="section-title-en">Bed Yoga</span></h2>
+  <p style="font-size:0.8rem; color:var(--ink-soft); line-height:1.8; margin-bottom:1rem;">
+    マットを敷かず、ベッドや布団に<strong style="color:var(--ink);">寝たままできる</strong>フローです。
+    起き上がれない朝、疲れ切った夜、体調がすぐれない日の「最低限これだけ」に。
+    動画なしでガイドが進むので、寝室の明かりを落としたままでも続けられます。
+  </p>
+  <div class="flow-tabs" id="flow-tabs">
+    <button class="flow-tab" data-flow="sleep">夜・安眠</button>
+    <button class="flow-tab" data-flow="wake">朝・目覚め</button>
+    <button class="flow-tab" data-flow="mini">3分だけ</button>
+  </div>
+  <div class="flow-card">
+    <div class="flow-meta" id="bed-flow-meta"></div>
+    <div class="flow-name" id="bed-flow-name"></div>
+    <div class="flow-lead" id="bed-flow-lead"></div>
+    <ul class="pose-list" id="bed-pose-list"></ul>
+    <button class="start-btn" id="bed-start">ガイドをはじめる</button>
+  </div>
 </div>
 
 <div class="page" id="page-emergency">
@@ -404,7 +487,7 @@ body {
       <li>◯ <strong style="color:var(--ink);">8割できれば合格</strong>、完璧を目指さない</li>
       <li>◯ 効果が出るのは<strong style="color:var(--ink);">2〜4週間後</strong></li>
       <li>◯ できなかった日があっても気にしない</li>
-      <li>◯ 体調が悪い日は無理せず休む</li>
+      <li>◯ 体調が悪い日は無理せず休む（動けそうなら<strong style="color:var(--ink);">寝たままヨガ3分</strong>だけ）</li>
     </ul>
   </div>
   <button class="reset-btn" id="reset-btn">記録をすべてリセット</button>
@@ -443,11 +526,11 @@ body {
     </ul>
     <p style="font-size:0.8rem; color:var(--ink-muted); margin-top:1rem; line-height:1.7;">これらができないと対応する部位が硬いサイン。陰ヨガ・ストレッチで改善できます。</p>
   </div>
-  <h2 class="section-title">about <span class="section-title-en">v0.2</span></h2>
+  <h2 class="section-title">about <span class="section-title-en">v0.3</span></h2>
   <div style="background:var(--paper); padding:1.3rem; border-radius:4px; box-shadow:var(--shadow); font-size:0.83rem; color:var(--ink-soft); line-height:1.9;">
     <p style="font-family:var(--serif); color:var(--ink); margin-bottom:0.8rem; letter-spacing:0.05em;">整 — Totonoe</p>
     <p>食後の眠気・午後のだるさ・体の硬さを暮らしのリズムから整えるための個人用習慣アプリ。</p>
-    <p style="margin-top:0.8rem; font-size:0.75rem; color:var(--ink-muted);">v0.2 · Phase 2 (Firebase Sync)<br>Googleログインで端末間同期に対応</p>
+    <p style="margin-top:0.8rem; font-size:0.75rem; color:var(--ink-muted);">v0.3 · Phase 3 (Bed Yoga)<br>寝たままできるガイド付きフローを追加。夜・朝のフローを完走すると今日の習慣に自動で記録されます。<br>v0.2 · Googleログインで端末間同期に対応</p>
   </div>
 </div>
 
@@ -462,6 +545,31 @@ body {
 </nav>
 
 <div class="toast" id="toast">記録しました</div>
+
+<div class="flow-overlay" id="flow-overlay">
+  <div class="flow-top">
+    <div class="flow-step" id="flow-step"></div>
+    <button class="flow-close" id="flow-close" aria-label="閉じる">×</button>
+  </div>
+  <div class="flow-stage">
+    <div class="flow-pose-en" id="flow-pose-en"></div>
+    <div class="flow-pose" id="flow-pose"></div>
+    <div class="flow-ring">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="track" cx="60" cy="60" r="56"></circle>
+        <circle class="bar" id="flow-bar" cx="60" cy="60" r="56"></circle>
+      </svg>
+      <div class="flow-count" id="flow-count">0</div>
+    </div>
+    <div class="flow-desc" id="flow-desc"></div>
+    <div class="flow-next" id="flow-next"></div>
+  </div>
+  <div class="flow-controls">
+    <button class="flow-ctrl" id="flow-prev">前へ</button>
+    <button class="flow-ctrl main" id="flow-toggle">一時停止</button>
+    <button class="flow-ctrl" id="flow-skip">次へ</button>
+  </div>
+</div>
 
 <div class="login-overlay" id="login-overlay">
   <div class="login-card">
@@ -514,7 +622,7 @@ const HABITS = {
   morning: [
     { id: 'm1', text: '<strong>カーテンを開けて朝日を浴びる</strong>', note: '体内時計をリセット（2分）' },
     { id: 'm2', text: '<strong>コップ1杯の水</strong>を飲む' },
-    { id: 'm3', text: '<strong>朝ヨガ 10分</strong>', note: '交感神経を穏やかに立ち上げる' },
+    { id: 'm3', text: '<strong>朝ヨガ 10分</strong>', note: '交感神経を穏やかに立ち上げる／起きられない日は寝たままヨガでも可' },
     { id: 'm4', text: '<strong>タンパク質入りの朝食</strong>', note: '卵・納豆・ヨーグルト等' }
   ],
   noon: [
@@ -531,7 +639,7 @@ const HABITS = {
   night: [
     { id: 'g1', text: '<strong>夕食は就寝2〜3時間前</strong>まで' },
     { id: 'g2', text: '<strong>40度のお風呂に15分</strong>浸かる', note: 'シャワーのみは避ける' },
-    { id: 'g3', text: '<strong>夜ヨガ</strong>(曜日別)', note: '就寝1〜2時間前まで' },
+    { id: 'g3', text: '<strong>夜ヨガ</strong>(曜日別)', note: '就寝1〜2時間前まで／疲れた日は寝たままヨガに切替' },
     { id: 'g4', text: '<strong>足を壁に上げるポーズ</strong>5分', note: '副交感神経を優位に' },
     { id: 'g5', text: '就寝30分前から<strong>スマホを見ない</strong>' },
     { id: 'g6', text: '<strong>同じ時間に寝る</strong>' }
@@ -867,9 +975,204 @@ updateStats();
 updateStreakBanner();
 renderNightYoga(new Date().getDay());
 
+/* ---- 寝たままヨガ（Bed Yoga）: ガイド付きフロー ---- */
+const BED_FLOWS = {
+  sleep: {
+    meta: 'Night · 約10分',
+    name: '夜の安眠フロー',
+    lead: '就寝前、布団に入ったまま。副交感神経を優位にして眠りに落ちやすい状態をつくります。終わったらそのまま眠ってOK。',
+    habit: 'g3',
+    poses: [
+      { jp: '仰向けの呼吸', en: 'Settle', sec: 60, desc: '仰向けで両手をお腹に。鼻から4秒吸って、6秒かけて吐く。お腹のふくらみを手で感じる。' },
+      { jp: '膝を抱えるポーズ', en: 'Apanasana', sec: 60, desc: '両膝を胸に引き寄せて抱える。腰の反りがゆるむ。息を吐くたびに少しだけ深く。' },
+      { jp: '膝倒しツイスト（左）', en: 'Twist L', sec: 45, desc: '両膝を揃えて左へ倒し、顔は右へ。肩は床（マットレス）につけたまま。' },
+      { jp: '膝倒しツイスト（右）', en: 'Twist R', sec: 45, desc: '反対側へ。腰から背中がじんわりほどけるのを待つ。力で捻らない。' },
+      { jp: '仰向けの合蹠', en: 'Supta Baddha Konasana', sec: 90, desc: '足の裏を合わせ、膝を外へ開いて脱力。股関節が硬い日は膝の下に枕やクッションを。' },
+      { jp: '片脚を伸ばす（左）', en: 'Hamstring L', sec: 45, desc: '左脚を天井へ。膝は少し曲げてよい。太ももの裏が伸びるところで止めて呼吸。' },
+      { jp: '片脚を伸ばす（右）', en: 'Hamstring R', sec: 45, desc: '右脚も同じように。左右の硬さの違いを覚えておく。' },
+      { jp: '橋のポーズ', en: 'Setu Bandha', sec: 45, desc: '膝を立てて腰をゆっくり持ち上げる。きつければ低いままで。3回に分けて上げ下げしてもよい。' },
+      { jp: '脚を上げて休む', en: 'Legs Up', sec: 120, desc: '壁があれば脚を壁に預ける。なければ膝を曲げて脚をベッドヘッドや積んだ枕に。足のむくみが抜ける。' },
+      { jp: 'しかばねのポーズ', en: 'Savasana', sec: 90, desc: '全身の力を抜いて、ただ呼吸を数える。眠ってしまってかまわない。' }
+    ]
+  },
+  wake: {
+    meta: 'Morning · 約6分',
+    name: '朝の目覚めフロー',
+    lead: '目が覚めてすぐ、布団の中で。血流と呼吸を静かに立ち上げてから起き上がるので、起床直後のだるさが軽くなります。',
+    habit: 'm3',
+    poses: [
+      { jp: '全身を伸ばす', en: 'Full Stretch', sec: 30, desc: '両手を頭の上へ、つま先は遠くへ。あくびをするように大きく伸びる。' },
+      { jp: '膝を抱えて左右にゆらす', en: 'Rock', sec: 45, desc: '両膝を抱え、背中で小さくゆらゆら。背骨をマッサージするイメージ。' },
+      { jp: '膝倒しツイスト（左）', en: 'Twist L', sec: 40, desc: '両膝を左へ。顔は右へ。内臓が目を覚ます。' },
+      { jp: '膝倒しツイスト（右）', en: 'Twist R', sec: 40, desc: '反対側へ。呼吸は止めない。' },
+      { jp: '仰向けの合蹠', en: 'Supta Baddha Konasana', sec: 45, desc: '足の裏を合わせて膝を開く。デスクワークで縮んだ股関節をひらく。' },
+      { jp: '片脚上げ（左右）', en: 'Leg Raise', sec: 60, desc: '片脚ずつ天井へ。30秒で左右を入れ替える。ふくらはぎまで血を巡らせる。' },
+      { jp: '橋のポーズ', en: 'Setu Bandha', sec: 40, desc: '膝を立てて腰を持ち上げる。お尻とももの裏に軽く力を入れて目を覚ます。' },
+      { jp: '首と肩をほぐす', en: 'Neck & Shoulders', sec: 40, desc: '仰向けのまま首を左右へゆっくり。肩をすくめて、ストンと落とすを数回。' },
+      { jp: '深呼吸で起きる', en: 'Wake Breath', sec: 30, desc: '鼻から深く吸って、口から強めに吐くを5回。最後に横向きになってから起き上がる。' }
+    ]
+  },
+  mini: {
+    meta: 'Anytime · 約3分',
+    name: '3分だけフロー',
+    lead: '何もできない日の保険。3分でも「やった日」になります。続ける方が、完璧にやるより効きます。',
+    habit: null,
+    poses: [
+      { jp: '膝を抱えるポーズ', en: 'Apanasana', sec: 45, desc: '両膝を胸へ。腰まわりの緊張だけ先に落とす。' },
+      { jp: '膝倒しツイスト（左）', en: 'Twist L', sec: 40, desc: '両膝を左へ倒して脱力。肩は浮かせない。' },
+      { jp: '膝倒しツイスト（右）', en: 'Twist R', sec: 40, desc: '反対側へ。息を吐きながら重さを預ける。' },
+      { jp: '呼吸で終える', en: 'Breathe', sec: 55, desc: '仰向けで4秒吸って6秒吐く。数えることに集中して終わり。' }
+    ]
+  }
+};
+
+const RING_LEN = 2 * Math.PI * 56;
+let bedFlowKey = 'sleep';
+let flowState = null;
+let flowTimer = null;
+let wakeLockRef = null;
+
+function renderBedFlow(key) {
+  bedFlowKey = key;
+  const flow = BED_FLOWS[key];
+  document.getElementById('bed-flow-meta').textContent = flow.meta;
+  document.getElementById('bed-flow-name').textContent = flow.name;
+  document.getElementById('bed-flow-lead').textContent = flow.lead;
+  const ul = document.getElementById('bed-pose-list');
+  ul.innerHTML = '';
+  flow.poses.forEach((p, i) => {
+    const li = document.createElement('li');
+    li.className = 'pose-item';
+    li.innerHTML = `<div class="pose-idx">${String(i + 1).padStart(2, '0')}</div>` +
+      `<div class="pose-body"><span class="pose-name">${p.jp}</span><span class="pose-sec">${formatSec(p.sec)}</span>` +
+      `<div class="pose-desc">${p.desc}</div></div>`;
+    ul.appendChild(li);
+  });
+  document.querySelectorAll('.flow-tab').forEach(t => t.classList.toggle('active', t.dataset.flow === key));
+}
+
+function formatSec(sec) {
+  return sec >= 60 && sec % 60 === 0 ? `${sec / 60}分` : `${sec}秒`;
+}
+
+async function requestWakeLock() {
+  try {
+    if ('wakeLock' in navigator) wakeLockRef = await navigator.wakeLock.request('screen');
+  } catch (e) { /* 非対応環境では何もしない */ }
+}
+
+function releaseWakeLock() {
+  try { if (wakeLockRef) { wakeLockRef.release(); wakeLockRef = null; } } catch (e) {}
+}
+
+function startFlow(key) {
+  const flow = BED_FLOWS[key];
+  flowState = { key, idx: 0, left: flow.poses[0].sec, paused: false, done: false };
+  document.getElementById('flow-overlay').classList.add('show');
+  document.getElementById('flow-toggle').textContent = '一時停止';
+  renderFlowStep();
+  requestWakeLock();
+  if (flowTimer) clearInterval(flowTimer);
+  flowTimer = setInterval(tickFlow, 1000);
+}
+
+function tickFlow() {
+  if (!flowState || flowState.paused || flowState.done) return;
+  flowState.left--;
+  if (flowState.left <= 0) {
+    const flow = BED_FLOWS[flowState.key];
+    if (flowState.idx >= flow.poses.length - 1) { finishFlow(); return; }
+    flowState.idx++;
+    flowState.left = flow.poses[flowState.idx].sec;
+    buzz();
+  }
+  renderFlowStep();
+}
+
+function buzz() {
+  try { if (navigator.vibrate) navigator.vibrate(60); } catch (e) {}
+}
+
+function renderFlowStep() {
+  const flow = BED_FLOWS[flowState.key];
+  const pose = flow.poses[flowState.idx];
+  document.getElementById('flow-step').textContent =
+    `${String(flowState.idx + 1).padStart(2, '0')} / ${String(flow.poses.length).padStart(2, '0')}`;
+  document.getElementById('flow-pose').textContent = pose.jp;
+  document.getElementById('flow-pose-en').textContent = pose.en;
+  document.getElementById('flow-desc').textContent = pose.desc;
+  document.getElementById('flow-count').textContent = flowState.left;
+  const next = flow.poses[flowState.idx + 1];
+  document.getElementById('flow-next').textContent = next ? `next — ${next.jp}` : 'next — おわり';
+  const bar = document.getElementById('flow-bar');
+  bar.style.strokeDasharray = RING_LEN;
+  bar.style.strokeDashoffset = RING_LEN * (1 - flowState.left / pose.sec);
+}
+
+function jumpFlow(delta) {
+  if (!flowState || flowState.done) return;
+  const flow = BED_FLOWS[flowState.key];
+  const next = flowState.idx + delta;
+  if (next < 0) { flowState.left = flow.poses[flowState.idx].sec; renderFlowStep(); return; }
+  if (next >= flow.poses.length) { finishFlow(); return; }
+  flowState.idx = next;
+  flowState.left = flow.poses[next].sec;
+  renderFlowStep();
+}
+
+function toggleFlow() {
+  if (!flowState || flowState.done) return;
+  flowState.paused = !flowState.paused;
+  document.getElementById('flow-toggle').textContent = flowState.paused ? '再開する' : '一時停止';
+}
+
+function finishFlow() {
+  const flow = BED_FLOWS[flowState.key];
+  flowState.done = true;
+  if (flowTimer) { clearInterval(flowTimer); flowTimer = null; }
+  buzz();
+  document.getElementById('flow-pose-en').textContent = 'Well done';
+  document.getElementById('flow-pose').textContent = 'おつかれさまでした';
+  document.getElementById('flow-count').textContent = '整';
+  document.getElementById('flow-bar').style.strokeDashoffset = 0;
+  document.getElementById('flow-next').textContent = '';
+  if (flow.habit) {
+    const today = getTodayData();
+    today[flow.habit] = true;
+    saveAll();
+    refreshUI();
+    document.getElementById('flow-desc').textContent = '今日の習慣に記録しました。そのまま呼吸を整えて休んでください。';
+  } else {
+    document.getElementById('flow-desc').textContent = '3分でも積み重ねです。そのまま呼吸を整えて休んでください。';
+  }
+  document.getElementById('flow-toggle').textContent = '閉じる';
+}
+
+function closeFlow() {
+  if (flowTimer) { clearInterval(flowTimer); flowTimer = null; }
+  flowState = null;
+  releaseWakeLock();
+  document.getElementById('flow-overlay').classList.remove('show');
+}
+
+document.querySelectorAll('.flow-tab').forEach(tab =>
+  tab.addEventListener('click', () => renderBedFlow(tab.dataset.flow)));
+document.getElementById('bed-start').addEventListener('click', () => startFlow(bedFlowKey));
+document.getElementById('flow-close').addEventListener('click', closeFlow);
+document.getElementById('flow-prev').addEventListener('click', () => jumpFlow(-1));
+document.getElementById('flow-skip').addEventListener('click', () => jumpFlow(1));
+document.getElementById('flow-toggle').addEventListener('click', () => {
+  if (flowState && flowState.done) closeFlow(); else toggleFlow();
+});
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && flowState && !flowState.paused && !flowState.done) requestWakeLock();
+});
+
+renderBedFlow(new Date().getHours() < 11 ? 'wake' : 'sleep');
+
 setInterval(() => {
   const newKey = getTodayKey();
-  if (window._lastDateKey && window._lastDateKey !== newKey) location.reload();
+  if (window._lastDateKey && window._lastDateKey !== newKey && !flowState) location.reload();
   window._lastDateKey = newKey;
 }, 60000);
 window._lastDateKey = getTodayKey();
